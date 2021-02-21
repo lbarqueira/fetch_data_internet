@@ -25,6 +25,8 @@ Future<Album> fetchAlbum() async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
+    print(response.body);
+    print(json.decode(response.body));
     return Album.fromJson(json.decode(response.body));
   } else {
     // If the server did not return a 200 OK response,
@@ -84,11 +86,20 @@ class _MyAppState extends State<MyApp> {
           title: Text('Fetch Data Example'),
         ),
         body: Center(
+          // To display the data on screen, use the FutureBuilder widget.
+          // The FutureBuilder widget comes with Flutter and makes it easy
+          // to work with asynchronous data sources.
           child: FutureBuilder<Album>(
             future: futureAlbum,
-            builder: (context, snapshot) {
+            builder: (_, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data.title);
+                return Column(
+                  children: [
+                    Text(snapshot.data.title),
+                    Text(snapshot.data.id.toString()),
+                    Text(snapshot.data.userId.toString()),
+                  ],
+                );
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
