@@ -94,6 +94,7 @@ class _MyAppState extends State<MyApp> {
             builder: (_, snapshot) {
               if (snapshot.hasData) {
                 return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(snapshot.data.title),
                     Text(snapshot.data.id.toString()),
